@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<!--         <bean id="audioRepository" -->
+<!--                 class="ca.dal.cs.dalooc.persistence.AudioRepository"> -->
+<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
+<!--         </bean> -->
+        
+<!--         <bean id="videoRepository" -->
+<!--                 class="ca.dal.cs.dalooc.persistence.VideoRepository"> -->
+<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
+<!--         </bean> -->
+        
+<!--         <bean id="documentRepository" -->
+<!--                 class="ca.dal.cs.dalooc.persistence.DocumentRepository"> -->
+<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
+<!--         </bean> -->
+        
+        <bean id="courseRepository"
+                class="ca.dal.cs.dalooc.persistence.CourseRepository">
+                <property name="mongoTemplate" ref="mongoTemplate" />
+        </bean>
+        
+        <bean id="userRepository"
+                class="ca.dal.cs.dalooc.persistence.UserRepository">
+                <property name="mongoTemplate" ref="mongoTemplate" />
+        </bean>
+
+        <bean id="testAnswerRepository"
+                class="ca.dal.cs.dalooc.persistence.TestAnswerRepository">
+                <property name="mongoTemplate" ref="mongoTemplate" />
+        </bean>
+        
+<!--         <bean id="learningObjectRepository" -->
+<!--                 class="ca.dal.cs.dalooc.persistence.LearningObjectRepository"> -->
+<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
+<!--         </bean> -->
+        
+<!--         <bean id="syllabusRepository" -->
+<!--                 class="ca.dal.cs.dalooc.persistence.SyllabusRepository"> -->
+<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
+<!--         </bean> -->
+
+        <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+                <constructor-arg name="mongo" ref="mongo" />
+                <constructor-arg name="databaseName" value="dalooc" />
+        </bean>
+
+        <!-- Factory bean that creates the Mongo instance -->
+        <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
+<!--                 <property name="host" value="localhost" /> -->
+                <property name="host" value="yen.cs.dal.ca" />
+                <property name="port" value="27017" />
+        </bean>
+
+        <!-- Activate annotation configured components -->
+        <context:annotation-config />
+
+        <!-- Scan components for annotations within the configured package -->
+        <context:component-scan base-package="ca.dal.cs.dalooc">
+                <context:exclude-filter type="annotation"
+                        expression="org.springframework.context.annotation.Configuration" />
+        </context:component-scan>
+        
+</beans>
