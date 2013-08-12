@@ -28,7 +28,7 @@ public class User implements Serializable {
 	}
 	
 	@Id
-	private String id;
+	private String _id;
 	
 	private String firstName;
 	
@@ -44,7 +44,7 @@ public class User implements Serializable {
 	
 	public User() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 	}
 	
 	public User(String firstName, String lastName, UserType userType,
@@ -61,15 +61,15 @@ public class User implements Serializable {
 	public User(String id, String firstName, String lastName,
 			UserType userType, String email, char[] password, boolean emailValid) {
 		this(firstName, lastName, userType, email, password, emailValid);
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getFirstName() {
@@ -128,12 +128,12 @@ public class User implements Serializable {
 		if (!(o instanceof User)) {
 			return false;
 		}
-		return ((User)o).id.equals(this.id);
+		return ((User)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -141,8 +141,7 @@ public class User implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"User\" [\"id\" : \"" + this.id + "\""); 
-		sb.append("[\"id\" : \"" + this.id + "\""); 
+		sb.append("[\"_id\" : \"" + this._id + "\""); 
 		sb.append(", \"firstName\" : \"" + this.firstName + "\""); 
 		sb.append(", \"lastName\" : \"" + this.lastName + "\"");
 		sb.append(", \"userType\" : \"" + this.userType.typeName + "\"");
@@ -155,7 +154,7 @@ public class User implements Serializable {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new User(this.id, this.firstName, this.lastName, this.userType, this.email, this.password, this.emailValid);
+		return new User(this._id, this.firstName, this.lastName, this.userType, this.email, this.password, this.emailValid);
 	}
 	
 }

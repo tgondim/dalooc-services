@@ -13,7 +13,7 @@ public class Video implements Serializable, LearningObjectContent {
 	private static final long serialVersionUID = -7467666512127374196L;
 
 	@Id
-	private String id;
+	private String _id;
 	
 	private String name;
 	
@@ -23,7 +23,7 @@ public class Video implements Serializable, LearningObjectContent {
 	
 	public Video() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 	}
 
 	public Video(String name, String description, String contentFileName) {
@@ -35,17 +35,17 @@ public class Video implements Serializable, LearningObjectContent {
 
 	public Video(String id, String name, String description, String contentFileName) {
 		this(name, description, contentFileName);
-		this.id = id;
+		this._id = id;
 	}
 
 	@Override
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	@Override
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	@Override
@@ -86,12 +86,12 @@ public class Video implements Serializable, LearningObjectContent {
 		if (!(o instanceof Video)) {
 			return false;
 		}
-		return ((Video)o).id.equals(this.id);
+		return ((Video)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -99,8 +99,7 @@ public class Video implements Serializable, LearningObjectContent {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"Video\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "\"");
@@ -111,6 +110,6 @@ public class Video implements Serializable, LearningObjectContent {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Video(this.id, this.name, this.description, this.contentFileName);
+		return new Video(this._id, this.name, this.description, this.contentFileName);
 	}
 }

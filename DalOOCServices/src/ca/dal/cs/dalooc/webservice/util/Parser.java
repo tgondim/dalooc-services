@@ -22,15 +22,8 @@ public class Parser {
 	public static Course getCourseObject(BasicDBObject courseDBObject) {
 		Syllabus syllabus;
 		LearningObject learningObject;
-//		Video video;
-//		Audio audio;
-//		Document document;
-//		TestQuestion testQuestion;
-//		Option option;
 		BasicDBObject auxDBObject;
 		BasicDBList auxDBList;
-//		BasicDBList otherDBList;
-//		BasicDBList anotherDBList;
 
 		Course course = new Course();
 		course.setId((String)courseDBObject.get("_id"));
@@ -39,7 +32,7 @@ public class Parser {
 		
 		auxDBObject = (BasicDBObject)courseDBObject.get("syllabus");
 		syllabus = new Syllabus();
-		syllabus.setId(auxDBObject.getString("id"));
+		syllabus.setId(auxDBObject.getString("_id"));
 		syllabus.setInstructor(auxDBObject.getString("instructor"));
 		syllabus.setCourseDetail(auxDBObject.getString("courseDetail"));
 		
@@ -82,7 +75,7 @@ public class Parser {
 		otherDBList = (BasicDBList)learningObjectDBObject.get("videoList");
 		for (int l = 0; l < otherDBList.size(); l++) {
 			video = new Video();
-			video.setId(((BasicDBObject)otherDBList.get(l)).getString("id"));
+			video.setId(((BasicDBObject)otherDBList.get(l)).getString("_id"));
 			video.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			video.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			video.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
@@ -93,7 +86,7 @@ public class Parser {
 		otherDBList = (BasicDBList)learningObjectDBObject.get("audioList");
 		for (int l = 0; l < otherDBList.size(); l++) {
 			audio = new Audio();
-			audio.setId(((BasicDBObject)otherDBList.get(l)).getString("id"));
+			audio.setId(((BasicDBObject)otherDBList.get(l)).getString("_id"));
 			audio.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			audio.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			audio.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
@@ -104,7 +97,7 @@ public class Parser {
 		otherDBList = (BasicDBList)learningObjectDBObject.get("documentList");
 		for (int l = 0; l < otherDBList.size(); l++) {
 			document = new Document();
-			document.setId(((BasicDBObject)otherDBList.get(l)).getString("id"));
+			document.setId(((BasicDBObject)otherDBList.get(l)).getString("_id"));
 			document.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			document.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			document.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
@@ -115,14 +108,14 @@ public class Parser {
 		otherDBList = (BasicDBList)learningObjectDBObject.get("testQuestionList");
 		for (int l = 0; l < otherDBList.size(); l++) {
 			testQuestion = new TestQuestion();
-			testQuestion.setId(((BasicDBObject)otherDBList.get(l)).getString("id"));
+			testQuestion.setId(((BasicDBObject)otherDBList.get(l)).getString("_id"));
 			testQuestion.setQuestion(((BasicDBObject)otherDBList.get(l)).getString("question"));
 			testQuestion.setRelatedContendId(((BasicDBObject)otherDBList.get(l)).getString("relatedContendId"));
 			
 			anotherDBList = (BasicDBList)((BasicDBObject)otherDBList.get(l)).get("optionList");
 			for (int m = 0; m < anotherDBList.size(); m++) {
 				option = new Option();
-				option.setId(((BasicDBObject)anotherDBList.get(m)).getString("id"));
+				option.setId(((BasicDBObject)anotherDBList.get(m)).getString("_id"));
 				option.setItem(((BasicDBObject)anotherDBList.get(m)).getString("item"));
 				option.setStatement(((BasicDBObject)anotherDBList.get(m)).getString("statement"));
 				option.setCorrect(Boolean.valueOf(((BasicDBObject)anotherDBList.get(m)).getString("correct")));
@@ -159,7 +152,7 @@ public class Parser {
 		
 		if (course.getSyllabus() != null) {
 			syllabusDBObject = new BasicDBObject();
-			syllabusDBObject.put("id", course.getSyllabus().getId());
+			syllabusDBObject.put("_id", course.getSyllabus().getId());
 			syllabusDBObject.put("instructor", course.getSyllabus().getInstructor());
 			syllabusDBObject.put("courseDetail", course.getSyllabus().getCourseDetail());
 			
@@ -191,7 +184,7 @@ public class Parser {
 			videoDBList = new BasicDBList();
 			for (Video video : learningObject.getVideoList()) {
 				videoDBObject = new BasicDBObject();
-				videoDBObject.put("id", video.getId());
+				videoDBObject.put("_id", video.getId());
 				videoDBObject.put("name", video.getName());
 				videoDBObject.put("description", video.getDescription());
 				videoDBObject.put("contentFileName", video.getContentFileName());
@@ -204,7 +197,7 @@ public class Parser {
 			audioDBList = new BasicDBList();
 			for (Audio audio : learningObject.getAudioList()) {
 				audioDBObject = new BasicDBObject();
-				audioDBObject.put("id", audio.getId());
+				audioDBObject.put("_id", audio.getId());
 				audioDBObject.put("name", audio.getName());
 				audioDBObject.put("description", audio.getDescription());
 				audioDBObject.put("contentFileName", audio.getContentFileName());
@@ -217,7 +210,7 @@ public class Parser {
 			documentDBList = new BasicDBList();
 			for (Document document : learningObject.getDocumentList()) {
 				documentDBObject = new BasicDBObject();
-				documentDBObject.put("id", document.getId());
+				documentDBObject.put("_id", document.getId());
 				documentDBObject.put("name", document.getName());
 				documentDBObject.put("description", document.getDescription());
 				documentDBObject.put("contentFileName", document.getContentFileName());
@@ -230,14 +223,14 @@ public class Parser {
 			testQuestionDBList = new BasicDBList();
 			for (TestQuestion testQuestion : learningObject.getTestQuestionList()) {
 				testQuestionDBObject = new BasicDBObject();
-				testQuestionDBObject.put("id", testQuestion.getId());
+				testQuestionDBObject.put("_id", testQuestion.getId());
 				testQuestionDBObject.put("question", testQuestion.getQuestion());
 				testQuestionDBObject.put("relatedContendId", testQuestion.getRelatedContendId());
 				
 				optionDBList = new BasicDBList();
 				for (Option option : testQuestion.getOptionList()) {
 					optionDBObject = new BasicDBObject();
-					optionDBObject.put("id", option.getId());
+					optionDBObject.put("_id", option.getId());
 					optionDBObject.put("item", option.getItem());
 					optionDBObject.put("statement", option.getStatement());
 					optionDBObject.put("correct", option.isCorrect());
@@ -261,7 +254,7 @@ public class Parser {
 	
 	public static User getUserObject(BasicDBObject userDBObject) {
 		User user = new User();
-		user.setId((String)userDBObject.get("id"));
+		user.setId((String)userDBObject.get("_id"));
 		user.setFirstName((String)userDBObject.get("firstName"));
 		user.setLastName((String)userDBObject.get("lastName"));
 		
@@ -281,7 +274,7 @@ public class Parser {
 	public static BasicDBObject getUserDBObject(User user) {
 		BasicDBObject userDBObject;
 		userDBObject = new BasicDBObject();
-		userDBObject.put("id", user.getId());
+		userDBObject.put("_id", user.getId());
 		userDBObject.put("firstName", user.getFirstName());
 		userDBObject.put("lastName", user.getLastName());
 		userDBObject.put("userType", user.getUserType().getTypeName());

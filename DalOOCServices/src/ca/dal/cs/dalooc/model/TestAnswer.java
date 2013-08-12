@@ -127,7 +127,6 @@ public class TestAnswer implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"TestAnswer\" [\"id\" : \"" + this.id + "\"");
 		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"userId\" : \"" + this.userId + "\"");
 		sb.append(", \"courseId\" : \"" + this.courseId + "\"");

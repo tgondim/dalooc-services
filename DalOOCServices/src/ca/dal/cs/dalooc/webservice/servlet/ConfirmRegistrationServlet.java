@@ -75,7 +75,7 @@ public class ConfirmRegistrationServlet extends HttpServlet {
 		if (userId != null) {
 			
 			Query query = new Query();
-			query.addCriteria(Criteria.where("id").is(userId));
+			query.addCriteria(Criteria.where("_id").is(userId));
 			
 			Update update = new Update();
 			update.set("emailValid", true);

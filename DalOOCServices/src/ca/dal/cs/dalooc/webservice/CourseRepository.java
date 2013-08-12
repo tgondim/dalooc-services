@@ -39,7 +39,7 @@ public class CourseRepository {
 		Course course = Parser.getCourseObject(courseDBObject);
 		this.courseRepository.saveObject(course);
 		
-		return "OK";
+		return "true";
 	}
 	
 	public String updateCourse(String courseId, String courseString) {
@@ -57,7 +57,11 @@ public class CourseRepository {
 		
 		WriteResult result = this.courseRepository.updateObject(query, update);
 		
-		return result.toString();
+		if (result.getLastError().get("err") != null) {
+			return "false";
+		}
+		
+		return "true";
 	}
 	
 	public String removeCourse(String courseId) {

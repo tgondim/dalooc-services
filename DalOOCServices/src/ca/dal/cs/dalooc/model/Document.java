@@ -12,7 +12,7 @@ public class Document implements Serializable, LearningObjectContent {
 	private static final long serialVersionUID = 2299573581005816207L;
 
 	@Id
-	private String id;
+	private String _id;
 
 	private String name;
 	
@@ -33,7 +33,7 @@ public class Document implements Serializable, LearningObjectContent {
 	
 	public Document() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 		this.type = DocumentType.UNKNOWN;
 	}
 	
@@ -51,22 +51,22 @@ public class Document implements Serializable, LearningObjectContent {
 
 	public Document(String id, String name, String description, String contentFileName) {
 		this(name, description, contentFileName);
-		this.id = id;
+		this._id = id;
 	}
 
 	public Document(String id, String name, String description, String contentFileName, DocumentType type) {
 		this(name, description, contentFileName, type);
-		this.id = id;
+		this._id = id;
 	}
 
 	@Override
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	@Override
 	public String getId() {
-		return id;
+		return _id;
 	}
 	
 	@Override
@@ -134,12 +134,12 @@ public class Document implements Serializable, LearningObjectContent {
 		if (!(o instanceof Document)) {
 			return false;
 		}
-		return ((Document)o).id.equals(this.id);
+		return ((Document)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -147,7 +147,7 @@ public class Document implements Serializable, LearningObjectContent {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 //		sb.append("\"Document\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "\"");
@@ -158,7 +158,7 @@ public class Document implements Serializable, LearningObjectContent {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Document(this.id, this.name, this.description, this.contentFileName, this.type);
+		return new Document(this._id, this.name, this.description, this.contentFileName, this.type);
 	}
 	
 }

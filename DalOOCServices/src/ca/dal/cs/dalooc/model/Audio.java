@@ -13,7 +13,7 @@ public class Audio implements Serializable, LearningObjectContent {
 	private static final long serialVersionUID = -2401466755865587517L;
 
 	@Id
-	private String id;
+	private String _id;
 
 	private String name;
 
@@ -23,7 +23,7 @@ public class Audio implements Serializable, LearningObjectContent {
 	
 	public Audio() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 	}
 	
 	public Audio(String name, String description, String contentFileName) {
@@ -40,12 +40,12 @@ public class Audio implements Serializable, LearningObjectContent {
 
 	@Override
 	public String getId() {
-		return id;
+		return _id;
 	}
 	
 	@Override
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 	
 	@Override
@@ -86,12 +86,12 @@ public class Audio implements Serializable, LearningObjectContent {
 		if (!(o instanceof Audio)) {
 			return false;
 		}
-		return ((Audio)o).id.equals(this.id);
+		return ((Audio)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -100,7 +100,7 @@ public class Audio implements Serializable, LearningObjectContent {
 		StringBuffer sb = new StringBuffer();
 		
 //		sb.append("\"Audio\" [\"id\" : \"" + this.id + "\""); 
-		sb.append("[\"id\" : \"" + this.id + "\""); 
+		sb.append("[\"_id\" : \"" + this._id + "\""); 
 		sb.append(", \"name\" : \"" + this.name + "\""); 
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "]");
@@ -110,7 +110,7 @@ public class Audio implements Serializable, LearningObjectContent {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Audio(this.id, this.name, this.description, this.contentFileName);
+		return new Audio(this._id, this.name, this.description, this.contentFileName);
 	}
 	
 }

@@ -14,7 +14,7 @@ public class TestQuestion implements Serializable {
 	private static final long serialVersionUID = -6169912738402228188L;
 
 	@Id
-	private String id;
+	private String _id;
 	
 	private String question;
 	
@@ -24,7 +24,7 @@ public class TestQuestion implements Serializable {
 	
 	public TestQuestion() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 		this.optionList = new ArrayList<Option>();
 	}
 	
@@ -35,7 +35,7 @@ public class TestQuestion implements Serializable {
 	
 	public TestQuestion(String id, String question) {
 		this(question);
-		this.id = id;
+		this._id = id;
 	}
 
 	public TestQuestion(String id, String question, String relatedContendId) {
@@ -51,15 +51,15 @@ public class TestQuestion implements Serializable {
 
 	public TestQuestion(String id, String question, ArrayList<Option> options, String relatedContendId) {
 		this(question, options, relatedContendId);
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getQuestion() {
@@ -105,12 +105,12 @@ public class TestQuestion implements Serializable {
 			return false;
 		}
 		
-		return ((TestQuestion)o).id.equals(this.id);
+		return ((TestQuestion)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -118,8 +118,7 @@ public class TestQuestion implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"TestQuestion\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"question\" : \"" + this.question + "\"");
 		
 		sb.append(", \"optionList\" : \"" + this.optionList + "\"");
@@ -132,7 +131,7 @@ public class TestQuestion implements Serializable {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new TestQuestion(this.id, this.question, new ArrayList<Option>(this.optionList), this.relatedContendId);
+		return new TestQuestion(this._id, this.question, new ArrayList<Option>(this.optionList), this.relatedContendId);
 	}
 	
 }

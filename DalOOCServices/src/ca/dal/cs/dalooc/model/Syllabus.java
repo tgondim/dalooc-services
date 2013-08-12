@@ -15,7 +15,7 @@ public class Syllabus implements Serializable {
 	private static final long serialVersionUID = 4972782735596024948L;
 
 	@Id
-	private String id;
+	private String _id;
 	
 	private String instructor;
 	
@@ -27,7 +27,7 @@ public class Syllabus implements Serializable {
 
 	public Syllabus() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 		this.references = new ArrayList<String>();
 		this.prerequisites = new ArrayList<String>();
 	}
@@ -39,12 +39,12 @@ public class Syllabus implements Serializable {
 	}
 	public Syllabus(String id, String instructor, String courseDetail) {
 		this(instructor, courseDetail);
-		this.id = id;
+		this._id = id;
 	}
 
 	public Syllabus(String id, String instructor, String courseDetail, ArrayList<String> references, ArrayList<String> prerequisites) {
 		this(id, instructor, courseDetail);
-		this.id = id;
+		this._id = id;
 		this.references = references;
 		this.prerequisites = prerequisites;
 	}
@@ -82,11 +82,11 @@ public class Syllabus implements Serializable {
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 	
 	@Override
@@ -97,12 +97,12 @@ public class Syllabus implements Serializable {
 		if (!(o instanceof Syllabus)) {
 			return false;
 		}
-		return ((Syllabus)o).id.equals(this.id);
+		return ((Syllabus)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -110,7 +110,7 @@ public class Syllabus implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-		sb.append("[id : \"" + this.id + "\"");
+		sb.append("[_id : \"" + this._id + "\"");
 		sb.append(", instructor : \"" + this.instructor + "\"");
 		sb.append(", courseDetail : \"" + this.courseDetail + "\"");
 		
@@ -127,7 +127,7 @@ public class Syllabus implements Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Syllabus(this.id, 
+		return new Syllabus(this._id, 
 				this.instructor, 
 				this.courseDetail, 
 				(ArrayList<String>)((ArrayList<String>)this.references).clone(), 

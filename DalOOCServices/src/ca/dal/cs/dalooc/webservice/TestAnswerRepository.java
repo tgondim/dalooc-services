@@ -16,7 +16,7 @@ public class TestAnswerRepository {
 	public String saveTestAnswer(String testAnswerString) {
 		BasicDBObject testAnswerDBObject = (BasicDBObject)JSON.parse(testAnswerString);
 		this.testAnswerRepository.saveObject(Parser.getTestAnswerObject(testAnswerDBObject));
-		return "OK";
+		return "true";
 	}
 	
 	public String hasAnsweredCorrect(String userId, String courseId, String learningObjectId, String testQuestionId, String optionId) {		

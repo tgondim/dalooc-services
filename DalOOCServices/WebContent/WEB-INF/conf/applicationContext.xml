@@ -5,21 +5,6 @@
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-
-<!--         <bean id="audioRepository" -->
-<!--                 class="ca.dal.cs.dalooc.persistence.AudioRepository"> -->
-<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
-<!--         </bean> -->
-        
-<!--         <bean id="videoRepository" -->
-<!--                 class="ca.dal.cs.dalooc.persistence.VideoRepository"> -->
-<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
-<!--         </bean> -->
-        
-<!--         <bean id="documentRepository" -->
-<!--                 class="ca.dal.cs.dalooc.persistence.DocumentRepository"> -->
-<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
-<!--         </bean> -->
         
         <bean id="courseRepository"
                 class="ca.dal.cs.dalooc.persistence.CourseRepository">
@@ -36,16 +21,6 @@
                 <property name="mongoTemplate" ref="mongoTemplate" />
         </bean>
         
-<!--         <bean id="learningObjectRepository" -->
-<!--                 class="ca.dal.cs.dalooc.persistence.LearningObjectRepository"> -->
-<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
-<!--         </bean> -->
-        
-<!--         <bean id="syllabusRepository" -->
-<!--                 class="ca.dal.cs.dalooc.persistence.SyllabusRepository"> -->
-<!--                 <property name="mongoTemplate" ref="mongoTemplate" /> -->
-<!--         </bean> -->
-
         <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
                 <constructor-arg name="mongo" ref="mongo" />
                 <constructor-arg name="databaseName" value="dalooc" />

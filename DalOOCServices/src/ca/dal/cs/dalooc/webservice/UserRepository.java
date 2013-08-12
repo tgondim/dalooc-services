@@ -27,7 +27,7 @@ public class UserRepository {
 	}
 
 	public String getUser(String userId) {
-		String[] names = { "id" };
+		String[] names = { "_id" };
 		String[] values = { userId };
 		
 		User user = this.userRepository.getObject(names, values);

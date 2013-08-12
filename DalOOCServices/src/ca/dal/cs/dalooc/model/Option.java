@@ -13,7 +13,7 @@ public class Option implements Serializable {
 	private static final long serialVersionUID = -1635574802269444795L;
 
 	@Id
-	private String id;
+	private String _id;
 	
 	private String item;
 	
@@ -23,7 +23,7 @@ public class Option implements Serializable {
 
 	public Option() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 	}
 
 	public Option(String item, String statement, boolean correct) {
@@ -35,15 +35,15 @@ public class Option implements Serializable {
 
 	public Option(String id, String item, String statement, boolean correct) {
 		this(item, statement, correct);
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getItem() {
@@ -80,12 +80,12 @@ public class Option implements Serializable {
 			return false;
 		}
 		
-		return ((Option)o).id.equals(this.id);
+		return ((Option)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -93,8 +93,7 @@ public class Option implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"Option\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"item\" : \"" + this.item + "\"");
 		sb.append(", \"statement\" : \"" + this.statement + "\"");
 		
@@ -107,7 +106,7 @@ public class Option implements Serializable {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Option(this.id, this.statement, this.correct);
+		return new Option(this._id, this.statement, this.correct);
 	}
 
 }
