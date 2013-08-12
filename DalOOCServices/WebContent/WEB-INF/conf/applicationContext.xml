@@ -53,8 +53,8 @@
 
         <!-- Factory bean that creates the Mongo instance -->
         <bean id="mongo" class="org.springframework.data.mongodb.core.MongoFactoryBean">
-<!--                 <property name="host" value="localhost" /> -->
-                <property name="host" value="yen.cs.dal.ca" />
+                <property name="host" value="localhost" />
+<!--                 <property name="host" value="yen.cs.dal.ca" /> -->
                 <property name="port" value="27017" />
         </bean>
 

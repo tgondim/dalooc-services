@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import ca.dal.cs.dalooc.model.Course;
-import ca.dal.cs.dalooc.model.LearningObject;
 import ca.dal.cs.dalooc.persistence.ApplicationContext;
 import ca.dal.cs.dalooc.webservice.util.Parser;
 
@@ -56,23 +55,14 @@ public class CourseRepository {
 		update.set("learningObjectList", courseToDB.getLearningObjectList());
 		update.set("syllabus", courseToDB.getSyllabus());
 		
-		WriteResult result = this.courseRepository.updateFirst(query, update, Course.class);
+		WriteResult result = this.courseRepository.updateObject(query, update);
 		
 		return result.toString();
 	}
-
-//	public String updateLearningObject(String courseId, String learningObjectString) {
-//		BasicDBObject learningObjectDBObject = (BasicDBObject)JSON.parse(learningObjectString);
-//		LearningObject learningObjectToDB = Parser.getLearningObject(learningObjectDBObject);
-//		
-//		Query query = new Query();
-//		query.addCriteria(Criteria.where("_id").is(courseId));
-//		
-//		Update update = new Update();
-//		update.set("learningObjectList", learningObjectToDB);
-//		
-//		WriteResult result = this.courseRepository.updateFirst(query, update, Course.class);
-//		
-//		return result.toString();
-//	}
+	
+	public String removeCourse(String courseId) {
+		this.courseRepository.deleteObject("_id", courseId);
+		
+		return "true";
+	}
 }

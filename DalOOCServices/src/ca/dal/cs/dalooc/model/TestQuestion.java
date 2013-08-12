@@ -85,6 +85,15 @@ public class TestQuestion implements Serializable {
 	public void setRelatedContendId(String relatedContendId) {
 		this.relatedContendId = relatedContendId;
 	}
+	
+	public Option getCorrectOption() {
+		for (Option option : this.optionList) {
+			if (option.isCorrect()) {
+				return option;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public boolean equals(Object o) {

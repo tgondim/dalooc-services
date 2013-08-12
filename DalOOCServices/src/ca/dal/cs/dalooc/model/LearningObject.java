@@ -6,14 +6,21 @@ import java.util.ArrayList;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 
 @org.springframework.data.mongodb.core.mapping.Document
 public class LearningObject implements Serializable {
 	
+	public enum Status {
+		TODO,
+		DOING,
+		DONE
+	}
+
 	private static final long serialVersionUID = -7926340467663710908L;
 
 	@Id
-	private String id;
+	private String _id;
 
 	private String name;
 	
@@ -26,10 +33,15 @@ public class LearningObject implements Serializable {
 	private ArrayList<Document> documentList;
 
 	private ArrayList<TestQuestion> testQuestionList;
+	
+	private int order;
+	
+	@Transient
+	private LearningObject.Status status;
 
 	public LearningObject() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 		this.videoList = new ArrayList<Video>();
 		this.audioList = new ArrayList<Audio>();
 		this.documentList = new ArrayList<Document>();
@@ -44,7 +56,7 @@ public class LearningObject implements Serializable {
 	
 	public LearningObject(String id, String name, String description) {
 		this(name, description);
-		this.id = id;
+		this._id = id;
 	}
 	
 	public LearningObject(String id, 
@@ -53,20 +65,21 @@ public class LearningObject implements Serializable {
 			ArrayList<Video> videoList, 
 			ArrayList<Audio> audioList, 
 			ArrayList<Document> documentList,
-			ArrayList<TestQuestion> testQuestionsList) {
+			ArrayList<TestQuestion> testQuestionsList, int order) {
 		this(id, name, description);
 		this.videoList = videoList;
 		this.audioList = audioList;
 		this.documentList = documentList;
 		this.testQuestionList = testQuestionsList;
+		this.order = order;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	public String getName() {
@@ -105,6 +118,22 @@ public class LearningObject implements Serializable {
 		this.testQuestionList = testQuestionList;
 	}
 
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public LearningObject.Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(LearningObject.Status status) {
+		this.status = status;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -113,12 +142,12 @@ public class LearningObject implements Serializable {
 		if (!(o instanceof LearningObject)) {
 			return false;
 		}
-		return ((LearningObject)o).id.equals(this.id);
+		return ((LearningObject)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -126,8 +155,7 @@ public class LearningObject implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 
-//		sb.append("\"LearningObject\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		
@@ -147,6 +175,8 @@ public class LearningObject implements Serializable {
 			String testQuestionsList = this.testQuestionList.toString();
 			sb.append(", \"testQuestionList\" : \"" + testQuestionsList + "\"");
 		}
+
+		sb.append(", \"order\" : \"" + String.valueOf(this.order) + "\"");
 		sb.append("]");
 		
 		return sb.toString();
@@ -155,12 +185,13 @@ public class LearningObject implements Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new LearningObject(this.id, 
+		return new LearningObject(this._id, 
 				this.name, 
 				this.description, 
 				(ArrayList<Video>)this.videoList.clone(), 
 				(ArrayList<Audio>)this.audioList.clone(), 
 				(ArrayList<Document>)this.documentList.clone(),
-				(ArrayList<TestQuestion>)this.testQuestionList.clone());
+				(ArrayList<TestQuestion>)this.testQuestionList.clone(), 
+				this.order);
 	}
 }

@@ -13,7 +13,7 @@ public class TestAnswer implements Serializable {
 	private static final long serialVersionUID = 2705882188259380281L;
 
 	@Id
-	private String id;
+	private String _id;
 
 	private String userId;
 
@@ -24,10 +24,12 @@ public class TestAnswer implements Serializable {
 	private String testQuestionId;
 
 	private String optionId;
+	
+	private boolean correct;
 
 	public TestAnswer() {
 		super();
-		this.id = new ObjectId().toString();
+		this._id = new ObjectId().toString();
 	}
 
 	public TestAnswer(String userId, String courseId, String learningObjectId,
@@ -43,15 +45,15 @@ public class TestAnswer implements Serializable {
 	public TestAnswer(String id, String userId, String courseId, String learningObjectId,
 			String testQuestionId, String optionId) {
 		this(userId, courseId, learningObjectId, testQuestionId, optionId);
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getId() {
-		return id;
+		return _id;
 	}
 
 	public void setId(String id) {
-		this.id = id;
+		this._id = id;
 	}
 
 	public String getUserId() {
@@ -94,6 +96,14 @@ public class TestAnswer implements Serializable {
 		this.optionId = optionId;
 	}
 	
+	public boolean isCorrect() {
+		return correct;
+	}
+
+	public void setCorrect(boolean correct) {
+		this.correct = correct;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -104,12 +114,12 @@ public class TestAnswer implements Serializable {
 			return false;
 		}
 		
-		return ((TestAnswer)o).id.equals(this.id);
+		return ((TestAnswer)o)._id.equals(this._id);
 	}
 	
 	@Override
 	public int hashCode() {
-		BigInteger big = new BigInteger(this.id, 16);
+		BigInteger big = new BigInteger(this._id, 16);
 		return super.hashCode() * (big.intValue() + 1);
 	}
 	
@@ -118,12 +128,13 @@ public class TestAnswer implements Serializable {
 		StringBuffer sb = new StringBuffer();
 		
 //		sb.append("\"TestAnswer\" [\"id\" : \"" + this.id + "\"");
-		sb.append("[\"id\" : \"" + this.id + "\"");
+		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"userId\" : \"" + this.userId + "\"");
 		sb.append(", \"courseId\" : \"" + this.courseId + "\"");
 		sb.append(", \"learningObjectId\" : \"" + this.learningObjectId + "\"");
 		sb.append(", \"testQuestionId\" : \"" + this.testQuestionId + "\"");
 		sb.append(", \"optionId\" : \"" + this.optionId + "\"");
+		sb.append(", \"correct\" : \"" + String.valueOf(this.correct) + "\"");
 		
 		sb.append("]");
 
@@ -132,6 +143,6 @@ public class TestAnswer implements Serializable {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new TestAnswer(this.id, this.userId, this.courseId, this.learningObjectId, this.testQuestionId, this.optionId);
+		return new TestAnswer(this._id, this.userId, this.courseId, this.learningObjectId, this.testQuestionId, this.optionId);
 	}
 }

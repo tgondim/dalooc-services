@@ -41,7 +41,11 @@
     <description></description>
     <display-name>UploadFileServlet</display-name>
     <servlet-name>UploadFileServlet</servlet-name>
-    <servlet-class>ca.dal.cs.dalooc.webservices.servlet.UploadFileServlet</servlet-class>
+    <servlet-class>ca.dal.cs.dalooc.webservice.servlet.UploadFileServlet</servlet-class>
+    <init-param>
+      <param-name>log4j-properties-location</param-name>
+      <param-value>WEB-INF/conf/log4j.properties</param-value>
+   </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>UploadFileServlet</servlet-name>
@@ -51,7 +55,11 @@
     <description></description>
     <display-name>ConfirmRegistrationServlet</display-name>
     <servlet-name>ConfirmRegistrationServlet</servlet-name>
-    <servlet-class>ca.dal.cs.dalooc.webservices.servlet.ConfirmRegistrationServlet</servlet-class>
+    <servlet-class>ca.dal.cs.dalooc.webservice.servlet.ConfirmRegistrationServlet</servlet-class>
+    <init-param>
+      <param-name>log4j-properties-location</param-name>
+      <param-value>WEB-INF/conf/log4j.properties</param-value>
+   </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>ConfirmRegistrationServlet</servlet-name>

@@ -40,10 +40,8 @@ public class UserRepository implements Repository<User> {
 	}
 
 	@Override
-	public WriteResult updateObject(String id, Object[] nameValue) {
-		return this.mongoTemplate.updateFirst(new Query(Criteria.where("id").is(id)), 
-				Update.update((String)nameValue[0], nameValue[1]), 
-				User.class);
+	public WriteResult updateObject(Query query, Update update) {
+		return this.mongoTemplate.updateFirst(query, update, User.class);
 	}
 
 	@Override
@@ -63,5 +61,15 @@ public class UserRepository implements Repository<User> {
 		if (this.mongoTemplate.collectionExists(User.class)) {
 			this.mongoTemplate.dropCollection(User.class);
 		}
+	}
+	
+	@Override
+	public List<User> getObjectList(String[] name, String[] value) {
+		Query query = new Query();
+		
+		for (int i = 0; i < name.length; i++) {
+			query.addCriteria(Criteria.where(name[i]).is(value[i]));
+		}
+		return this.mongoTemplate.find(query, User.class);
 	}
 }

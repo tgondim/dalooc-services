@@ -23,7 +23,7 @@ public class Course implements Serializable {
 	private Syllabus syllabus;
 	
 	private ArrayList<LearningObject> learningObjectList;
-
+	
 	public Course() {
 		super();
 		this._id = new ObjectId().toString();
@@ -56,6 +56,10 @@ public class Course implements Serializable {
 		this._id = id;
 	}
 
+	public String getId() {
+		return _id;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -87,10 +91,6 @@ public class Course implements Serializable {
 	public void setLearningObjectList(ArrayList<LearningObject> learningObjectList) {
 		this.learningObjectList = learningObjectList;
 	}
-
-	public String getId() {
-		return _id;
-	}
 	
 	@Override
 	public boolean equals(Object o) {
@@ -115,7 +115,6 @@ public class Course implements Serializable {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"Course\" [\"_id\" : \"" + this._id + "\"");
 		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");

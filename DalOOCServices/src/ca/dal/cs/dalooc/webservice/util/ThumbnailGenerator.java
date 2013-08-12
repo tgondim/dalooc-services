@@ -19,7 +19,7 @@ public class ThumbnailGenerator implements Runnable {
 	}
 	
 	/** 
-	 * ffmpeg -i /Library/Tomcat6/webapps/DalOOC/videos/51f8fb0f036436d287aa497b.mp4 -deinterlace -an -ss 1 -f mjpeg -t 1 -r 1 -y -s 160x120 /Library/Tomcat6/webapps/DalOOC/videos/thumb/51f8fb0f036436d287aa497b.jpg 
+	 * ffmpeg -i webapps/DalOOCFiles/videos/52079544c2e64a740a643a77.mp4 -deinterlace -an -ss 1 -f mjpeg -t 1 -r 1 -y -s 160x120 webapps/DalOOCFiles/videos/thumb/52079544c2e64a740a643a77.jpg 
 	 * */
 	@Override
 	public void run() {

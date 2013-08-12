@@ -40,10 +40,8 @@ public class CourseRepository implements Repository<Course> {
 	}
 
 	@Override
-	public WriteResult updateObject(String id, Object[] nameValue) {
-		return this.mongoTemplate.updateFirst(new Query(Criteria.where("id").is(id)), 
-				Update.update((String)nameValue[0], nameValue[1]), 
-				Course.class);
+	public WriteResult updateObject(Query query, Update update) {
+		return this.mongoTemplate.updateFirst(query, update, Course.class);
 	}
 
 	@Override
@@ -65,8 +63,13 @@ public class CourseRepository implements Repository<Course> {
 		}
 	}
 	
-	public WriteResult updateFirst(Query query, Update update, Class<?> entityClass) {
-		return this.mongoTemplate.updateFirst(query, update, entityClass);
+	@Override
+	public List<Course> getObjectList(String[] name, String[] value) {
+		Query query = new Query();
+		
+		for (int i = 0; i < name.length; i++) {
+			query.addCriteria(Criteria.where(name[i]).is(value[i]));
+		}
+		return this.mongoTemplate.find(query, Course.class);
 	}
-
 }

@@ -40,10 +40,8 @@ public class TestAnswerRepository implements Repository<TestAnswer> {
 	}
 
 	@Override
-	public WriteResult updateObject(String id, Object[] nameValue) {
-		// TODO Check how is the use of this
-		return this.mongoTemplate.updateFirst(new Query(Criteria.where("id")
-				.is(id)), Update.update((String)nameValue[0], nameValue[1]), TestAnswer.class);
+	public WriteResult updateObject(Query query, Update update) {
+		return this.mongoTemplate.updateFirst(query, update, TestAnswer.class);
 	}
 
 	@Override
@@ -64,5 +62,15 @@ public class TestAnswerRepository implements Repository<TestAnswer> {
 		if (this.mongoTemplate.collectionExists(TestAnswer.class)) {
 			this.mongoTemplate.dropCollection(TestAnswer.class);
 		}
+	}
+
+	@Override
+	public List<TestAnswer> getObjectList(String[] name, String[] value) {
+		Query query = new Query();
+		
+		for (int i = 0; i < name.length; i++) {
+			query.addCriteria(Criteria.where(name[i]).is(value[i]));
+		}
+		return this.mongoTemplate.find(query, TestAnswer.class);
 	}
 }

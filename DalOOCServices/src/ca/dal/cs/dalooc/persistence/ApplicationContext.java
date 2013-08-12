@@ -10,8 +10,8 @@ public class ApplicationContext {
 	private static ConfigurableApplicationContext instance;
 	
 	static {
-//		ApplicationContext.instance = new FileSystemXmlApplicationContext(DalOOCProperties.getProperty("ApplicationContextXmlFile"));
-		ApplicationContext.instance = new FileSystemXmlApplicationContext("applicationContext.xml");
+		ApplicationContext.instance = new FileSystemXmlApplicationContext(DalOOCProperties.getProperty("ApplicationContextXmlFile"));
+//		ApplicationContext.instance = new FileSystemXmlApplicationContext("applicationContext.xml");
 	}
 	
 	public static ConfigurableApplicationContext getInstance() {

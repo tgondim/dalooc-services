@@ -74,9 +74,10 @@ public class Parser {
 		BasicDBList otherDBList;
 		BasicDBList anotherDBList;
 		learningObject = new LearningObject();
-		learningObject.setId(learningObjectDBObject.getString("id"));
+		learningObject.setId(learningObjectDBObject.getString("_id"));
 		learningObject.setName(learningObjectDBObject.getString("name"));
 		learningObject.setDescription(learningObjectDBObject.getString("description"));
+		learningObject.setOrder(learningObjectDBObject.getInt("order"));
 		
 		otherDBList = (BasicDBList)learningObjectDBObject.get("videoList");
 		for (int l = 0; l < otherDBList.size(); l++) {
@@ -182,9 +183,10 @@ public class Parser {
 		learningObjectDBList = new BasicDBList();
 		for (LearningObject learningObject : course.getLearningObjectList())  {
 			learningObjectDBObject = new BasicDBObject();
-			learningObjectDBObject.put("id", learningObject.getId());
+			learningObjectDBObject.put("_id", learningObject.getId());
 			learningObjectDBObject.put("name", learningObject.getName());
 			learningObjectDBObject.put("description", learningObject.getDescription());
+			learningObjectDBObject.put("order", learningObject.getOrder());
 			
 			videoDBList = new BasicDBList();
 			for (Video video : learningObject.getVideoList()) {
@@ -293,24 +295,26 @@ public class Parser {
 	public static BasicDBObject getTestAnswerDBObject(TestAnswer testAnswer) {
 		BasicDBObject testAnswerDBObject;
 		testAnswerDBObject = new BasicDBObject();
-		testAnswerDBObject.put("id", testAnswer.getId());
+		testAnswerDBObject.put("_id", testAnswer.getId());
 		testAnswerDBObject.put("userId", testAnswer.getUserId());
 		testAnswerDBObject.put("courseId", testAnswer.getCourseId());
 		testAnswerDBObject.put("learningObjectId", testAnswer.getLearningObjectId());
 		testAnswerDBObject.put("testQuestionId", testAnswer.getTestQuestionId());
 		testAnswerDBObject.put("optionId", testAnswer.getOptionId());
+		testAnswerDBObject.put("correct", testAnswer.isCorrect());
 		
 		return testAnswerDBObject;
 	}
 
 	public static TestAnswer getTestAnswerObject(BasicDBObject testAnswerDBObject) {
 		TestAnswer testAnswer = new TestAnswer();
-		testAnswer.setId((String)testAnswerDBObject.get("id"));
+		testAnswer.setId((String)testAnswerDBObject.get("_id"));
 		testAnswer.setUserId((String)testAnswerDBObject.get("userId"));
 		testAnswer.setCourseId((String)testAnswerDBObject.get("courseId"));
 		testAnswer.setLearningObjectId((String)testAnswerDBObject.get("learningObjectId"));
 		testAnswer.setTestQuestionId((String)testAnswerDBObject.get("testQuestionId"));
 		testAnswer.setOptionId((String)testAnswerDBObject.get("optionId"));
+		testAnswer.setCorrect((Boolean)testAnswerDBObject.get("correct"));
 		
 		return testAnswer;
 	}
