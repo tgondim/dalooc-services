@@ -29,6 +29,7 @@ public class Parser {
 		course.setId((String)courseDBObject.get("_id"));
 		course.setName((String)courseDBObject.get("name"));
 		course.setDescription((String)courseDBObject.get("description"));
+		course.setOwnerId((String)courseDBObject.get("ownerId"));
 		
 		auxDBObject = (BasicDBObject)courseDBObject.get("syllabus");
 		syllabus = new Syllabus();
@@ -71,6 +72,7 @@ public class Parser {
 		learningObject.setName(learningObjectDBObject.getString("name"));
 		learningObject.setDescription(learningObjectDBObject.getString("description"));
 		learningObject.setOrder(learningObjectDBObject.getInt("order"));
+		learningObject.setCorrectAnswersPercentage(learningObjectDBObject.getDouble("correctAnswersPercentage"));
 		
 		otherDBList = (BasicDBList)learningObjectDBObject.get("videoList");
 		for (int l = 0; l < otherDBList.size(); l++) {
@@ -79,6 +81,7 @@ public class Parser {
 			video.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			video.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			video.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
+			video.setOrder(((BasicDBObject)otherDBList.get(l)).getInt("order"));
 			
 			learningObject.getVideoList().add(video);
 		}
@@ -90,6 +93,7 @@ public class Parser {
 			audio.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			audio.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			audio.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
+			audio.setOrder(((BasicDBObject)otherDBList.get(l)).getInt("order"));
 			
 			learningObject.getAudioList().add(audio);
 		}
@@ -101,6 +105,7 @@ public class Parser {
 			document.setName(((BasicDBObject)otherDBList.get(l)).getString("name"));
 			document.setDescription(((BasicDBObject)otherDBList.get(l)).getString("description"));
 			document.setContentFileName(((BasicDBObject)otherDBList.get(l)).getString("contentFileName"));
+			document.setOrder(((BasicDBObject)otherDBList.get(l)).getInt("order"));
 			
 			learningObject.getDocumentList().add(document);
 		}
@@ -111,6 +116,7 @@ public class Parser {
 			testQuestion.setId(((BasicDBObject)otherDBList.get(l)).getString("_id"));
 			testQuestion.setQuestion(((BasicDBObject)otherDBList.get(l)).getString("question"));
 			testQuestion.setRelatedContendId(((BasicDBObject)otherDBList.get(l)).getString("relatedContendId"));
+			testQuestion.setOrder(((BasicDBObject)otherDBList.get(l)).getInt("order"));
 			
 			anotherDBList = (BasicDBList)((BasicDBObject)otherDBList.get(l)).get("optionList");
 			for (int m = 0; m < anotherDBList.size(); m++) {
@@ -149,6 +155,7 @@ public class Parser {
 		courseDBObject.put("_id", course.getId());
 		courseDBObject.put("name", course.getName());
 		courseDBObject.put("description", course.getDescription());
+		courseDBObject.put("ownerId", course.getOwnerId());
 		
 		if (course.getSyllabus() != null) {
 			syllabusDBObject = new BasicDBObject();
@@ -180,6 +187,7 @@ public class Parser {
 			learningObjectDBObject.put("name", learningObject.getName());
 			learningObjectDBObject.put("description", learningObject.getDescription());
 			learningObjectDBObject.put("order", learningObject.getOrder());
+			learningObjectDBObject.put("correctAnswersPercentage", learningObject.getCorrectAnswersPercentage());
 			
 			videoDBList = new BasicDBList();
 			for (Video video : learningObject.getVideoList()) {
@@ -188,6 +196,7 @@ public class Parser {
 				videoDBObject.put("name", video.getName());
 				videoDBObject.put("description", video.getDescription());
 				videoDBObject.put("contentFileName", video.getContentFileName());
+				videoDBObject.put("order", video.getOrder());
 				
 				videoDBList.add(videoDBObject);
 			}
@@ -201,6 +210,7 @@ public class Parser {
 				audioDBObject.put("name", audio.getName());
 				audioDBObject.put("description", audio.getDescription());
 				audioDBObject.put("contentFileName", audio.getContentFileName());
+				audioDBObject.put("order", audio.getOrder());
 				
 				audioDBList.add(audioDBObject);
 			}
@@ -214,6 +224,7 @@ public class Parser {
 				documentDBObject.put("name", document.getName());
 				documentDBObject.put("description", document.getDescription());
 				documentDBObject.put("contentFileName", document.getContentFileName());
+				documentDBObject.put("order", document.getOrder());
 				
 				documentDBList.add(documentDBObject);
 			}
@@ -226,6 +237,7 @@ public class Parser {
 				testQuestionDBObject.put("_id", testQuestion.getId());
 				testQuestionDBObject.put("question", testQuestion.getQuestion());
 				testQuestionDBObject.put("relatedContendId", testQuestion.getRelatedContendId());
+				testQuestionDBObject.put("order", testQuestion.getOrder());
 				
 				optionDBList = new BasicDBList();
 				for (Option option : testQuestion.getOptionList()) {

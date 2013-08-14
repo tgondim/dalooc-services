@@ -3,6 +3,7 @@ package ca.dal.cs.dalooc.model;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -13,7 +14,6 @@ public class LearningObject implements Serializable {
 	
 	public enum Status {
 		TODO,
-		DOING,
 		DONE
 	}
 
@@ -35,6 +35,8 @@ public class LearningObject implements Serializable {
 	private ArrayList<TestQuestion> testQuestionList;
 	
 	private int order;
+
+	private double correctAnswersPercentage;
 	
 	@Transient
 	private LearningObject.Status status;
@@ -46,6 +48,8 @@ public class LearningObject implements Serializable {
 		this.audioList = new ArrayList<Audio>();
 		this.documentList = new ArrayList<Document>();
 		this.testQuestionList = new ArrayList<TestQuestion>();
+		this.status = LearningObject.Status.TODO;
+		this.correctAnswersPercentage = 0.0d;
 	}
 	
 	public LearningObject(String name, String description) {
@@ -65,13 +69,16 @@ public class LearningObject implements Serializable {
 			ArrayList<Video> videoList, 
 			ArrayList<Audio> audioList, 
 			ArrayList<Document> documentList,
-			ArrayList<TestQuestion> testQuestionsList, int order) {
+			ArrayList<TestQuestion> testQuestionsList, 
+			int order,
+			LearningObject.Status status) {
 		this(id, name, description);
 		this.videoList = videoList;
 		this.audioList = audioList;
 		this.documentList = documentList;
 		this.testQuestionList = testQuestionsList;
 		this.order = order;
+		this.status = status;
 	}
 
 	public void setId(String id) {
@@ -126,6 +133,14 @@ public class LearningObject implements Serializable {
 		this.order = order;
 	}
 
+	public double getCorrectAnswersPercentage() {
+		return correctAnswersPercentage;
+	}
+
+	public void setCorrectAnswersPercentage(double correctAnswersPercentage) {
+		this.correctAnswersPercentage = correctAnswersPercentage;
+	}
+
 	public LearningObject.Status getStatus() {
 		return status;
 	}
@@ -177,6 +192,7 @@ public class LearningObject implements Serializable {
 		}
 
 		sb.append(", \"order\" : \"" + String.valueOf(this.order) + "\"");
+		sb.append(", \"correctAnswersPercentage\" : \"" + String.valueOf(this.correctAnswersPercentage) + "\"");
 		sb.append("]");
 		
 		return sb.toString();
@@ -192,6 +208,17 @@ public class LearningObject implements Serializable {
 				(ArrayList<Audio>)this.audioList.clone(), 
 				(ArrayList<Document>)this.documentList.clone(),
 				(ArrayList<TestQuestion>)this.testQuestionList.clone(), 
-				this.order);
+				this.order, 
+				this.status);
+	}
+
+	public List<LearningObjectContent> getLearningObjectContentList() {
+		List<LearningObjectContent> learningObjectContentList = new ArrayList<LearningObjectContent>();
+		
+		learningObjectContentList.addAll(this.getVideoList());
+		learningObjectContentList.addAll(this.getAudioList());
+		learningObjectContentList.addAll(this.getDocumentList());
+		
+		return learningObjectContentList;
 	}
 }

@@ -19,17 +19,21 @@ public class TestAnswerRepository {
 		return "true";
 	}
 	
-	public String hasAnsweredCorrect(String userId, String courseId, String learningObjectId, String testQuestionId, String optionId) {		
+	public String getAnswerStatus(String userId, String courseId, String learningObjectId, String testQuestionId, String optionId) {
+		String returnString = "none";
 		String[] names = { "userId", "courseId", "learningObjectId", "testQuestionId" };
 		String[] values = { userId, courseId, learningObjectId, testQuestionId };
 		
-		List<TestAnswer> testAswerList = this.testAnswerRepository.getObjectList(names , values );
+		List<TestAnswer> testAswerList = this.testAnswerRepository.getObjectList(names , values);
 		
-		for (TestAnswer testAswer : testAswerList) {
-			if (testAswer.isCorrect()) {
-				return "true";
+		if (testAswerList.size() > 0) {
+			returnString = "incorrect";
+			for (TestAnswer testAswer : testAswerList) {
+				if (testAswer.isCorrect()) {
+					returnString = "correct";
+				}
 			}
 		}
-		return "false";
+		return returnString;
 	}
 }

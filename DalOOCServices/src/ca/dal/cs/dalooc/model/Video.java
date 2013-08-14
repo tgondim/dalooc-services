@@ -21,6 +21,8 @@ public class Video implements Serializable, LearningObjectContent {
 	
 	private String contentFileName;
 	
+	private int order;
+	
 	public Video() {
 		super();
 		this._id = new ObjectId().toString();
@@ -33,9 +35,10 @@ public class Video implements Serializable, LearningObjectContent {
 		this.contentFileName = contentFileName;
 	}
 
-	public Video(String id, String name, String description, String contentFileName) {
+	public Video(String id, String name, String description, String contentFileName, int order) {
 		this(name, description, contentFileName);
 		this._id = id;
+		this.order = order;
 	}
 
 	@Override
@@ -78,6 +81,14 @@ public class Video implements Serializable, LearningObjectContent {
 		this.contentFileName = contentFileName;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -103,6 +114,7 @@ public class Video implements Serializable, LearningObjectContent {
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "\"");
+		sb.append(", \"order\" : \"" + this.order + "\"");
 		sb.append("]");
 		
 		return sb.toString();
@@ -110,6 +122,6 @@ public class Video implements Serializable, LearningObjectContent {
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Video(this._id, this.name, this.description, this.contentFileName);
+		return new Video(this._id, this.name, this.description, this.contentFileName, this.order);
 	}
 }

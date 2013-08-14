@@ -1,5 +1,7 @@
 package ca.dal.cs.dalooc.model;
 
+import java.util.List;
+
 public interface LearningObjectContent {
 	
 	public String getId();

@@ -6,10 +6,17 @@ import java.util.ArrayList;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class TestQuestion implements Serializable {
+
+	public enum Status {
+		NONE,
+		CORRECT,
+		INCORRECT
+	}
 
 	private static final long serialVersionUID = -6169912738402228188L;
 
@@ -22,10 +29,16 @@ public class TestQuestion implements Serializable {
 	
 	private String relatedContendId;
 	
+	private int order;
+	
+	@Transient
+	private Status status; 
+	
 	public TestQuestion() {
 		super();
 		this._id = new ObjectId().toString();
 		this.optionList = new ArrayList<Option>();
+		this.status = TestQuestion.Status.NONE;
 	}
 	
 	public TestQuestion(String question) {
@@ -49,9 +62,10 @@ public class TestQuestion implements Serializable {
 		this.relatedContendId = relatedContendId;
 	}
 
-	public TestQuestion(String id, String question, ArrayList<Option> options, String relatedContendId) {
+	public TestQuestion(String id, String question, ArrayList<Option> options, String relatedContendId, int order) {
 		this(question, options, relatedContendId);
 		this._id = id;
+		this.order = order;
 	}
 
 	public String getId() {
@@ -86,6 +100,22 @@ public class TestQuestion implements Serializable {
 		this.relatedContendId = relatedContendId;
 	}
 	
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	public Option getCorrectOption() {
 		for (Option option : this.optionList) {
 			if (option.isCorrect()) {
@@ -123,6 +153,7 @@ public class TestQuestion implements Serializable {
 		
 		sb.append(", \"optionList\" : \"" + this.optionList + "\"");
 		sb.append(", \"relatedContendId\" : \"" + this.relatedContendId + "\"");
+		sb.append(", \"order\" : \"" + String.valueOf(this.order) + "\"");
 		
 		sb.append("]");
 
@@ -131,7 +162,7 @@ public class TestQuestion implements Serializable {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new TestQuestion(this._id, this.question, new ArrayList<Option>(this.optionList), this.relatedContendId);
+		return new TestQuestion(this._id, this.question, new ArrayList<Option>(this.optionList), this.relatedContendId, this.order);
 	}
 	
 }

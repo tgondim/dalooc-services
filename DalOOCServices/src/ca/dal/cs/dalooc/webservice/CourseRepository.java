@@ -1,12 +1,15 @@
 package ca.dal.cs.dalooc.webservice;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import ca.dal.cs.dalooc.model.Course;
+import ca.dal.cs.dalooc.model.TestAnswer;
+import ca.dal.cs.dalooc.model.TestQuestion;
 import ca.dal.cs.dalooc.persistence.ApplicationContext;
 import ca.dal.cs.dalooc.webservice.util.Parser;
 
@@ -18,6 +21,8 @@ import com.mongodb.util.JSON;
 public class CourseRepository {
 
 	private ca.dal.cs.dalooc.persistence.CourseRepository courseRepository = ApplicationContext.getInstance().getBean(ca.dal.cs.dalooc.persistence.CourseRepository.class);
+	
+	private ca.dal.cs.dalooc.persistence.TestAnswerRepository testAnswerRepository = ApplicationContext.getInstance().getBean(ca.dal.cs.dalooc.persistence.TestAnswerRepository.class);
 	
 	public String getAllCourses() {
 		
@@ -68,5 +73,46 @@ public class CourseRepository {
 		this.courseRepository.deleteObject("_id", courseId);
 		
 		return "true";
+	}
+	
+	public String getLearningObjectStatus(String userId, String courseId, String learningObjectIndex) {
+		String returnString = "todo";
+		int foundCorrect = 0;
+		
+		Course course = this.courseRepository.getObject(new String[] { "_id" }, new String[] { courseId } );
+		int index = Integer.valueOf(learningObjectIndex);
+		
+		String[] names = { "userId", "courseId", "learningObjectId", "testQuestionId" };
+		String[] values = new String[4];
+		
+		values[0] = userId;
+		values[1] = courseId;
+		values[2] = course.getLearningObjectList().get(index).getId();
+		
+		List<TestAnswer> testAswerList;
+		
+		for (TestQuestion testQuestion : course.getLearningObjectList().get(index).getTestQuestionList()) {
+			values[3] = testQuestion.getId();
+
+			testAswerList = this.testAnswerRepository.getObjectList(names , values);
+			
+			if (testAswerList.size() > 0) {
+				for (TestAnswer testAswer : testAswerList) {
+					if (testAswer.isCorrect()) {
+						foundCorrect++;
+						break;
+					}
+				}
+			}
+		}
+		
+		int numberOfQuestions = course.getLearningObjectList().get(index).getTestQuestionList().size();
+		if (foundCorrect == 0) {
+			returnString = "0";
+		} else {
+			returnString = String.valueOf(foundCorrect/(double)numberOfQuestions);
+		}
+
+		return returnString;
 	}
 }

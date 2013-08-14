@@ -20,6 +20,8 @@ public class Document implements Serializable, LearningObjectContent {
 	
 	private String contentFileName;
 	
+	private int order;
+	
 	public enum DocumentType {
 		UNKNOWN,
 		PDF,
@@ -54,9 +56,10 @@ public class Document implements Serializable, LearningObjectContent {
 		this._id = id;
 	}
 
-	public Document(String id, String name, String description, String contentFileName, DocumentType type) {
+	public Document(String id, String name, String description, String contentFileName, DocumentType type, int order) {
 		this(name, description, contentFileName, type);
 		this._id = id;
+		this.order = order;
 	}
 
 	@Override
@@ -107,6 +110,14 @@ public class Document implements Serializable, LearningObjectContent {
 		this.type = type;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	public static DocumentType getDocumentType(String extension) {
 		if (extension.equals("pdf")) {
 			return DocumentType.PDF;
@@ -146,11 +157,12 @@ public class Document implements Serializable, LearningObjectContent {
 	@Override
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-//		sb.append("\"Document\" [\"id\" : \"" + this.id + "\"");
+
 		sb.append("[\"_id\" : \"" + this._id + "\"");
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "\"");
+		sb.append(", \"order\" : \"" + String.valueOf(this.order) + "\"");
 		sb.append("]");
 		
 		return sb.toString();
@@ -158,7 +170,7 @@ public class Document implements Serializable, LearningObjectContent {
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Document(this._id, this.name, this.description, this.contentFileName, this.type);
+		return new Document(this._id, this.name, this.description, this.contentFileName, this.type, this.order);
 	}
 	
 }

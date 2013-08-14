@@ -23,6 +23,8 @@ public class Course implements Serializable {
 	private Syllabus syllabus;
 	
 	private ArrayList<LearningObject> learningObjectList;
+
+	private String ownerId;
 	
 	public Course() {
 		super();
@@ -47,9 +49,10 @@ public class Course implements Serializable {
 		this.learningObjectList = learningObjectList;
 	}
 
-	public Course(String id, String name, String description, ArrayList<LearningObject> learningObjectList, Syllabus syllabus) {
+	public Course(String id, String name, String description, ArrayList<LearningObject> learningObjectList, Syllabus syllabus, String ownerId) {
 		this(id, name, description, learningObjectList);
 		this.syllabus = syllabus;
+		this.ownerId = ownerId;
 	}
 
 	public void setId(String id) {
@@ -92,6 +95,14 @@ public class Course implements Serializable {
 		this.learningObjectList = learningObjectList;
 	}
 	
+	public String getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(String ownerId) {
+		this.ownerId = ownerId;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -119,6 +130,7 @@ public class Course implements Serializable {
 		sb.append(", \"name\" : \"" + this.name + "\"");
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"syllabus\" : \"" + this.syllabus);
+		sb.append(", \"ownerId\" : \"" + this.ownerId);
 		
 		if (this.learningObjectList != null) {
 			String learningObjectList = this.learningObjectList.toString();
@@ -133,6 +145,6 @@ public class Course implements Serializable {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Course(this._id, this.name, this.description, (ArrayList<LearningObject>)this.learningObjectList.clone(), (Syllabus)this.syllabus.clone());
+		return new Course(this._id, this.name, this.description, (ArrayList<LearningObject>)this.learningObjectList.clone(), (Syllabus)this.syllabus.clone(), this.ownerId);
 	}
 }

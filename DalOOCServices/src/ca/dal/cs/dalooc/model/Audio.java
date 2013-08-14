@@ -21,6 +21,8 @@ public class Audio implements Serializable, LearningObjectContent {
 	
 	private String contentFileName;
 	
+	private int order;
+	
 	public Audio() {
 		super();
 		this._id = new ObjectId().toString();
@@ -33,9 +35,10 @@ public class Audio implements Serializable, LearningObjectContent {
 		this.setContentFileName(contentFileName);
 	}
 
-	public Audio(String id, String name, String description, String contentFileName) {
+	public Audio(String id, String name, String description, String contentFileName, int order) {
 		this(name, description, contentFileName);
-		this.setId(id);
+		this._id = id;
+		this.order = order;
 	}
 
 	@Override
@@ -78,6 +81,14 @@ public class Audio implements Serializable, LearningObjectContent {
 		this.contentFileName = contentFileName;
 	}
 	
+	public int getOrder() {
+		return order;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -99,18 +110,18 @@ public class Audio implements Serializable, LearningObjectContent {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		
-//		sb.append("\"Audio\" [\"id\" : \"" + this.id + "\""); 
 		sb.append("[\"_id\" : \"" + this._id + "\""); 
 		sb.append(", \"name\" : \"" + this.name + "\""); 
 		sb.append(", \"description\" : \"" + this.description + "\"");
 		sb.append(", \"contentFileName\" : \"" + this.contentFileName + "]");
+		sb.append(", \"order\" : \"" + String.valueOf(this.order) + "]");
 		
 		return sb.toString();
 	}
 	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
-		return new Audio(this._id, this.name, this.description, this.contentFileName);
+		return new Audio(this._id, this.name, this.description, this.contentFileName, this.order);
 	}
 	
 }
