@@ -13,7 +13,7 @@ public class DalOOCProperties {
 	static {
 		try {
 //			File propertiesFile = new File("DalOOCServices.properties");
-			File propertiesFile = new File("webapps/DalOOCServices/WEB-INF/conf/DalOOCServices.properties");
+			File propertiesFile = new File("DalOOCServices/WEB-INF/conf/DalOOCServices.properties");
 			
 			properties = new Properties();
 			properties.load(new FileInputStream(propertiesFile));
